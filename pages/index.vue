@@ -1,3 +1,9 @@
+<script setup lang="ts">
+const firstLesson = useFirstLesson();
+</script>
+
 <template>
-  <div class="text-2xl text-orange-500">Hello, Mastering Nuxt 3</div>
+  <NuxtLink class="underline font-medium" :href="firstLesson.path">
+    Go to first lesson
+  </NuxtLink>
 </template>
