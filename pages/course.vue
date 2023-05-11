@@ -1,14 +1,13 @@
 <script setup>
-const { chapters, title } = useCourse();
-definePageMeta({
-  layout: "custom",
-});
+const course = await useCourse();
+const firstLesson = await useFirstLesson();
+// definePageMeta({
+//   layout: "custom",
+// });
 
 const resetError = async (error) => {
-  throw createError({
-    fatal: true,
-    message: "Fatal error",
-  });
+  await navigateTo(firstLesson.path);
+  error.value = null;
 };
 </script>
 
@@ -17,7 +16,7 @@ const resetError = async (error) => {
     <div class="mb-4 flex justify-between items-center w-full">
       <h1 class="text-3xl">
         <span class="font-medium">
-          <span class="font-bold">{{ title }}</span>
+          <span class="font-bold">{{ course.title }}</span>
         </span>
       </h1>
       <UserCard />
@@ -29,13 +28,13 @@ const resetError = async (error) => {
         <h3>Chapters</h3>
         <div
           class="space-y-1 mb-4 flex flex-col"
-          v-for="chapter in chapters"
+          v-for="chapter in course.chapters"
           :key="chapter.slug"
         >
           <h4>{{ chapter.title }}</h4>
           <NuxtLink
             v-for="(lesson, index) in chapter.lessons"
-            class="flex flex-row space-x-1 no-underline prose-sm font-normal py-1 px-4 -mx-4"
+            class="flex flex-row space-x-1 no-underline prose-sm font-normal py-1 px-4 -mx-4 hover:cursor-pointer"
             :key="lesson.slug"
             :to="lesson.path"
             :class="{
@@ -57,12 +56,14 @@ const resetError = async (error) => {
               Oh no, something went wrong with the lesson!
               <code>{{ error }}</code>
             </p>
-            <button
-              class="hover:cursor-pointer bg-gray-500 text-white font-bold px-4 py-2 rounded-md"
-              @click="resetError(error)"
-            >
-              Reset
-            </button>
+            <p>
+              <button
+                class="hover:cursor-pointer bg-gray-500 text-white font-bold px-4 py-2 rounded-md"
+                @click="resetError(error)"
+              >
+                Reset
+              </button>
+            </p>
           </template>
         </NuxtErrorBoundary>
       </div>
