@@ -19,10 +19,12 @@
     "@types/node": "^18",
     "@vueuse/core": "^10.1.2",
     "@vueuse/nuxt": "^10.1.2",
-    "nuxt": "^3.4.3"
+    "nuxt": "^3.4.3",
+    "vite-plugin-vsharp": "^1.4.2"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.4.10",
-    "pinia": "^2.0.36"
+    "pinia": "^2.0.36",
+    "stripe": "^12.5.0"
   }
 }
